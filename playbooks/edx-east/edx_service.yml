@@ -111,14 +111,15 @@
       ec2_elb_lb:
         profile: "{{ profile }}"
         region: "{{ aws_region }}"
-        scheme: "{{ elb_scheme }}"
-        name: "{{ elb_name }}"
+        scheme: "{{ item.scheme }}"
+        name: "{{ item.name}}"
         state: "{{ state }}"
         security_group_ids: "{{ elb_sec_group.group_id }}"
         subnets: "{{ elb_subnets }}"
         health_check: "{{ elb_healthcheck }}"
         listeners: "{{ elb_listeners }}"
-      register: elb
+      register: setup_elbs
+      with_items: elbs
 #
 # Service related components
 #
